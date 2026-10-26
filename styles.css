@@ -199,3 +199,12 @@ body.lock{overflow:hidden}
   .d-chart{height:360px}
   #updated{display:none}
 }
+
+/* Live desk */
+.live-item{background:#121b24;border:1px solid #223140;border-radius:14px;padding:14px 16px;margin:0 0 12px}
+.live-item.changed{border-color:#2ec4b6}
+.live-head{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.live-names{margin-top:6px;color:#8aa0b2;font-size:.9rem}
+.live-names .sym{margin-right:6px;font-weight:600}
+.live-take{margin:8px 0 4px;color:#e6eef5}
+.live-reads{margin:6px 0 0;font-size:.9rem}
