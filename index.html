@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Stock Watch</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="dot"></span>
+    <div>
+      <h1>Stock Watch</h1>
+      <p class="sub">Research and paper trading only. Not financial advice.</p>
+    </div>
+  </div>
+  <div class="top-right">
+    <span id="updated" class="pill">No data yet</span>
+    <button id="sampleBtn" class="btn">Preview with sample data</button>
+  </div>
+</header>
+
+<div id="sampleBanner" class="banner" hidden>
+  Showing SAMPLE data to preview the layout. None of it is real. <button id="sampleOff" class="link">Back to real data</button>
+</div>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="board" class="active">Board</button>
+  <button data-tab="watch">Watchlist</button>
+  <button data-tab="market">Market</button>
+  <button data-tab="about">Rules</button>
+</nav>
+
+<main>
+  <section id="tab-board" class="tab active">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search ticker or reason">
+      <div class="seg" id="filter">
+        <button data-f="all" class="active">All</button>
+        <button data-f="bullish">Bullish</button>
+        <button data-f="bearish">Bearish</button>
+        <button data-f="neutral">Neutral</button>
+      </div>
+      <select id="sort">
+        <option value="added">Newest first</option>
+        <option value="ticker">Ticker A-Z</option>
+        <option value="reasons">Most sourced reasons</option>
+      </select>
+    </div>
+    <div id="counts" class="counts"></div>
+    <div id="cards" class="cards"></div>
+    <div id="empty" class="empty" hidden>
+      <h2>The watchlist is empty</h2>
+      <p>No names have been researched yet.</p>
+    </div>
+  </section>
+
+  <section id="tab-watch" class="tab">
+    <div id="watchBox"></div>
+  </section>
+
+  <section id="tab-market" class="tab">
+    <div id="tiles" class="tiles"></div>
+    <h2 class="h2">Alerts</h2>
+    <div id="alerts"></div>
+  </section>
+
+  <!-- Public copy: paper ledger is intentionally not shown. Hidden element keeps app.js working. -->
+  <div id="ledgerBox" hidden></div>
+
+  <section id="tab-about" class="tab">
+    <div class="panel">
+      <h2>How to read this page</h2>
+      <ul>
+        <li>A lean is a hypothesis with stated reasons, never a certainty.</li>
+        <li>There is no score. Cards show lean, sourced reasons, and what would change the view.</li>
+        <li>Every reason links to its source and shows when it was read.</li>
+        <li>This page is read only. It never places trades.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
