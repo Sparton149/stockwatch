@@ -3,7 +3,6 @@
 window.STOCKWATCH = {
   updated: "2026-10-25",
   market: {
-    // SPY, QQQ, VIX baselines are set on MARKET WATCH's first pass.
     SPY: null,
     QQQ: null,
     VIX: null
