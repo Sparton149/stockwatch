@@ -17,7 +17,7 @@ h1,h2,h3{margin:0}
 .top-in{display:flex;align-items:center;gap:18px;max-width:1280px;margin:0 auto;padding:10px 24px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);flex:none}
 .bname{font-size:18px;font-weight:700;letter-spacing:.4px}
-.dot{width:12px;height:12px;border-radius:50%;background:var(--teal);box-shadow:0 0 14px var(--teal)}
+.globe{width:24px;height:24px;flex:none;filter:drop-shadow(0 0 6px rgba(46,196,182,.6))}
 .tabs{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{background:none;border:0;color:var(--muted);padding:8px 14px;cursor:pointer;border-radius:999px;white-space:nowrap;transition:background .15s,color .15s}
