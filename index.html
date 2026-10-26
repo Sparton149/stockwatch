@@ -19,7 +19,7 @@
       <button data-tab="watch">Watchlist</button>
       <button data-tab="market">Market</button>
       <button data-tab="ledger" id="ledgerTab">Paper ledger</button>
-      <button data-tab="about">Rules</button>
+      <button data-tab="live">Live desk</button>
     </nav>
     <div class="top-right">
       <span id="updated" class="pill">No data yet</span>
@@ -109,6 +109,16 @@
     <div class="more"><button id="smore" class="btn ghost" hidden>Show more</button></div>
   </section>
 
+  <!-- LIVE DESK -->
+  <section id="tab-live" class="tab">
+    <div class="page-head">
+      <h2>Live desk</h2>
+      <p class="muted">A log of each market-hours pass by the agent: what it checked, what it read, and what it concluded. It shows the agent's reading, not a screen feed, and is only as current as the last upload.</p>
+    </div>
+    <div id="liveMeta" class="muted small sinfo"></div>
+    <div id="liveBox"></div>
+  </section>
+
   <!-- BOARD -->
   <section id="tab-board" class="tab">
     <div class="toolbar">
@@ -151,21 +161,6 @@
     <div id="ledgerBox"></div>
   </section>
 
-  <!-- RULES -->
-  <section id="tab-about" class="tab">
-    <div class="panel">
-      <h2>How to read this page</h2>
-      <ul>
-        <li>A lean is a hypothesis with stated reasons, never a certainty.</li>
-        <li>There is no score. Cards show lean, sourced reasons, and what would change the view.</li>
-        <li>Every reason links to its source and shows when it was read.</li>
-        <li>Strategy results appear only after 20 closed paper trades.</li>
-        <li>Charts, heatmap, movers and indicators come from TradingView embeds and are shown as provided. They are not a recommendation.</li>
-        <li>The stock list is S&amp;P 500 membership, which is not a strict ranking by size. Some companies appear twice for two share classes.</li>
-        <li>This page is read only. It never places trades.</li>
-      </ul>
-    </div>
-  </section>
 </main>
 
 <!-- STOCK DETAIL DRAWER -->
