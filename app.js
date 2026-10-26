@@ -5,7 +5,7 @@
   var UNI = (window.SW_UNIVERSE && window.SW_UNIVERSE.stocks) || [];
   var modeMeta = document.querySelector('meta[name="sw-mode"]');
   var isPublic = !!(modeMeta && modeMeta.getAttribute("content") === "public");
-  var TABS = ["home", "stocks", "board", "watch", "market", "ledger", "about"];
+  var TABS = ["home", "stocks", "board", "watch", "market", "ledger", "live"];
   var PAGE = 50;
   var TV = "https://s3.tradingview.com/external-embedding/";
   var useSample = false;
@@ -349,6 +349,31 @@
     $("ledgerBox").innerHTML = html + "</div>";
   }
 
+  /* ---------- LIVE DESK ---------- */
+  function renderLive() {
+    var rows = (data().liveDesk || []).slice().reverse();
+    $("liveMeta").textContent = rows.length
+      ? rows.length + " passes logged \u00b7 newest first \u00b7 last pass " + rows[0].time
+      : "";
+    if (!rows.length) {
+      $("liveBox").innerHTML = '<div class="empty"><h2>No passes logged yet</h2><p class="muted">During market hours the agent logs a pass about every 30 minutes. Each entry lists the names it checked, what it read and a one-line takeaway.</p></div>';
+      return;
+    }
+    $("liveBox").innerHTML = rows.map(function (r) {
+      var names = (r.checked || []).map(function (t) { return tickerLink(t, "sym"); }).join(" ");
+      var reads = (r.read || []).map(function (x) {
+        return '<li><a href="' + esc(safeUrl(x.url)) + '" target="_blank" rel="noopener">' + esc(x.title) + "</a></li>";
+      }).join("");
+      return '<article class="live-item' + (r.change ? " changed" : "") + '">' +
+        '<div class="live-head"><b>' + esc(r.time) + "</b>" +
+        '<span class="badge ' + (r.change ? "bullish" : "neutral") + '">' + (r.change ? "change" : "no change") + "</span></div>" +
+        (names ? '<div class="live-names">Checked: ' + names + "</div>" : "") +
+        '<p class="live-take">' + esc(r.takeaway) + "</p>" +
+        (reads ? '<ul class="plain live-reads">' + reads + "</ul>" : "") +
+        "</article>";
+    }).join("");
+  }
+
   /* ---------- WATCHLIST TAB ---------- */
   function renderWatch() {
     var d = data();
@@ -438,7 +463,7 @@
     $("updated").textContent = d.updated ? "Updated: " + d.updated : "No data yet";
     $("sampleBanner").hidden = !useSample;
     $("sampleBtn").hidden = useSample;
-    renderHome(); renderBoard(); renderMarket(); renderStocks();
+    renderHome(); renderBoard(); renderMarket(); renderStocks(); renderLive();
     if (!isPublic) renderLedger();
     if (state.tab === "watch") renderWatch();
   }
