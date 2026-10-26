@@ -3,22 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Stock Watch</title>
+<meta name="sw-mode" content="public">
+<meta name="theme-color" content="#0b1117">
+<title>Atlas Watcher</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top">
-  <div class="brand">
-    <span class="dot"></span>
-    <div>
-      <h1>Stock Watch</h1>
-      <p class="sub">Research and paper trading only. Not financial advice.</p>
+  <div class="top-in">
+    <a class="brand" href="#home"><span class="dot"></span><span class="bname">Atlas Watcher</span></a>
+    <nav class="tabs" id="tabs" aria-label="Sections">
+      <button data-tab="home" class="active">Home</button>
+      <button data-tab="stocks">Stocks</button>
+      <button data-tab="board">Board</button>
+      <button data-tab="watch">Watchlist</button>
+      <button data-tab="market">Market</button>
+      <button data-tab="ledger" id="ledgerTab">Paper ledger</button>
+      <button data-tab="about">Rules</button>
+    </nav>
+    <div class="top-right">
+      <span id="updated" class="pill">No data yet</span>
+      <button id="sampleBtn" class="btn small-btn">Sample data</button>
     </div>
-  </div>
-  <div class="top-right">
-    <span id="updated" class="pill">No data yet</span>
-    <button id="sampleBtn" class="btn">Preview with sample data</button>
   </div>
 </header>
 
@@ -26,15 +32,86 @@
   Showing SAMPLE data to preview the layout. None of it is real. <button id="sampleOff" class="link">Back to real data</button>
 </div>
 
-<nav class="tabs" id="tabs">
-  <button data-tab="board" class="active">Board</button>
-  <button data-tab="watch">Watchlist</button>
-  <button data-tab="market">Market</button>
-  <button data-tab="about">Rules</button>
-</nav>
-
 <main>
-  <section id="tab-board" class="tab active">
+  <!-- HOME -->
+  <section id="tab-home" class="tab active">
+    <div class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Research and paper trading</p>
+        <h2 class="hero-h">Your market, at a glance.</h2>
+        <p class="hero-p">Live market heatmap, today's movers, and the names the agent is watching, with sourced reasons. Browse the whole S&amp;P 500 and open any stock for a chart, indicators and news.</p>
+        <div class="hero-cta">
+          <button class="btn" data-go="stocks">Browse the S&amp;P 500</button>
+          <button class="btn ghost" data-go="board">See the board</button>
+        </div>
+      </div>
+      <div class="hero-stats" id="heroStats"></div>
+    </div>
+
+    <div id="tape" class="tape"></div>
+
+    <div class="grid2">
+      <div class="panel-card">
+        <div class="pc-head"><h3>S&amp;P 500 heatmap</h3><span class="muted small">Live, by sector and size. Click a block for details.</span></div>
+        <div id="heatmap" class="wbox tall"></div>
+      </div>
+      <div class="panel-card">
+        <div class="pc-head"><h3>Top movers today</h3><span class="muted small">US market</span></div>
+        <div id="movers" class="wbox tall"></div>
+      </div>
+    </div>
+
+    <div class="sec-head"><h3>On the board</h3><button class="link" data-go="board">View all</button></div>
+    <div id="homeWatch" class="cards mini"></div>
+
+    <div class="sec-head"><h3>Latest alerts</h3><button class="link" data-go="market">Market tab</button></div>
+    <div id="homeAlerts"></div>
+  </section>
+
+  <!-- STOCKS -->
+  <section id="tab-stocks" class="tab">
+    <div class="page-head">
+      <h2>S&amp;P 500 stocks</h2>
+      <p class="muted">The 500 largest US companies by index membership. Search, filter, then open any stock for a live chart, indicators and news. Stars are saved on this device only.</p>
+    </div>
+    <div class="toolbar">
+      <input id="sq" type="search" placeholder="Search by ticker, company or industry" autocomplete="off">
+      <select id="ssector" aria-label="Sector"><option value="">All sectors</option></select>
+      <select id="ssort" aria-label="Sort">
+        <option value="ticker">Ticker A-Z</option>
+        <option value="name">Company A-Z</option>
+        <option value="sector">Sector</option>
+        <option value="added">Newest in the index</option>
+      </select>
+      <div class="seg" id="sview">
+        <button data-v="all" class="active">All</button>
+        <button data-v="watched">Watched</button>
+        <button data-v="starred">Starred</button>
+      </div>
+    </div>
+    <div id="sinfo" class="muted small sinfo"></div>
+    <div class="tablewrap">
+      <table class="stbl">
+        <thead><tr>
+          <th class="c-star" aria-label="Star"></th>
+          <th>Ticker</th>
+          <th>Company</th>
+          <th class="c-sector">Sector</th>
+          <th class="c-ind">Industry</th>
+          <th class="c-status">Status</th>
+        </tr></thead>
+        <tbody id="sbody"></tbody>
+      </table>
+    </div>
+    <div id="sempty" class="empty" hidden>
+      <h2>No stocks match</h2>
+      <p class="muted">Try a different search, sector or view.</p>
+    </div>
+    <div class="more"><button id="smore" class="btn ghost" hidden>Show more</button></div>
+  </section>
+
+  <!-- BOARD -->
+  <section id="tab-board" class="tab">
     <div class="toolbar">
       <input id="search" type="search" placeholder="Search ticker or reason">
       <div class="seg" id="filter">
@@ -53,23 +130,29 @@
     <div id="cards" class="cards"></div>
     <div id="empty" class="empty" hidden>
       <h2>The watchlist is empty</h2>
-      <p>No names have been researched yet.</p>
+      <p>No names have been researched yet. When MARKET WATCH adds its first 5 to 10 sourced names they will appear here as cards, grouped by lean.</p>
+      <p class="muted">Want to see the layout first? Use "Sample data" at the top.</p>
     </div>
   </section>
 
+  <!-- WATCHLIST -->
   <section id="tab-watch" class="tab">
     <div id="watchBox"></div>
   </section>
 
+  <!-- MARKET -->
   <section id="tab-market" class="tab">
     <div id="tiles" class="tiles"></div>
     <h2 class="h2">Alerts</h2>
     <div id="alerts"></div>
   </section>
 
-  <!-- Public copy: paper ledger is intentionally not shown. Hidden element keeps app.js working. -->
-  <div id="ledgerBox" hidden></div>
+  <!-- LEDGER -->
+  <section id="tab-ledger" class="tab">
+    <div id="ledgerBox"></div>
+  </section>
 
+  <!-- RULES -->
   <section id="tab-about" class="tab">
     <div class="panel">
       <h2>How to read this page</h2>
@@ -77,13 +160,37 @@
         <li>A lean is a hypothesis with stated reasons, never a certainty.</li>
         <li>There is no score. Cards show lean, sourced reasons, and what would change the view.</li>
         <li>Every reason links to its source and shows when it was read.</li>
+        <li>Strategy results appear only after 20 closed paper trades.</li>
+        <li>Charts, heatmap, movers and indicators come from TradingView embeds and are shown as provided. They are not a recommendation.</li>
+        <li>The stock list is S&amp;P 500 membership, which is not a strict ranking by size. Some companies appear twice for two share classes.</li>
         <li>This page is read only. It never places trades.</li>
       </ul>
     </div>
   </section>
 </main>
 
+<!-- STOCK DETAIL DRAWER -->
+<div id="drawer" class="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dTitle">
+  <div class="drawer-bg" data-close></div>
+  <aside class="drawer-pane">
+    <div class="drawer-head">
+      <div class="dh-text">
+        <h2 id="dTitle"></h2>
+        <p id="dSub" class="muted"></p>
+      </div>
+      <div class="drawer-actions">
+        <button id="dStar" class="iconbtn" aria-label="Star this stock">&#9734;</button>
+        <button class="iconbtn" data-close aria-label="Close">&times;</button>
+      </div>
+    </div>
+    <div id="dBody" class="drawer-body"></div>
+  </aside>
+</div>
+
+<footer class="foot">Research and paper trading only. Not financial advice.</footer>
+
 <script src="data.js"></script>
+<script src="universe.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
